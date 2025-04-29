@@ -1,0 +1,46 @@
+@startuml
+|Pembeli|
+start
+:Browse dan pilih produk;
+:Add to cart;
+:Checkout dan pilih metode pembayaran;
+
+|Sistem Tokopedia|
+:Verifikasi pembayaran;
+split
+  :Kirim notifikasi ke penjual;
+split again
+  :Generate nomor pesanan dan label pengiriman;
+endsplit
+
+|Penjual|
+:Terima notifikasi pesanan;
+:Siapkan dan kemas produk;
+:Tempel label pengiriman;
+
+|Kurir|
+:Ambil paket dari penjual;
+|Sistem Tokopedia|
+:Update status pengiriman dan resi;
+
+|Pembeli|
+:Melacak status pengiriman;
+:Terima produk;
+
+|Sistem Tokopedia|
+:Menunggu konfirmasi penerimaan;
+split
+  |Pembeli|
+  :Klik "Pesanan diterima";
+split again
+  :Sistem hitung mundur otomatis selesai;
+endsplit
+
+|Sistem Tokopedia|
+:Transfer dana ke penjual;
+
+|Pembeli|
+:Beri ulasan/review;
+
+stop
+@enduml
