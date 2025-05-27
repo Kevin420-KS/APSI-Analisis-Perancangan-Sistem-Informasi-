@@ -1,0 +1,34 @@
+@startuml
+actor Pembeli
+actor Pelayan
+actor "Pihak Bank" as Bank
+
+rectangle "Sistem Food Court" {
+    usecase "Melihat & Memesan Makanan" as UC1
+    usecase "Pilih Metode Pembayaran" as UC2
+    usecase "Proses Pembayaran" as UC3
+    usecase "Tambahkan Bunga (Jika Kredit/Paylater)" as UC4
+    usecase "Kirim Status Pembayaran ke Bank" as UC5
+    usecase "Instruksi Pengantaran" as UC6
+    usecase "Antar Makanan ke Pelanggan" as UC7
+    usecase "Konfirmasi Penerimaan Makanan" as UC8
+}
+
+' Relasi Pembeli
+Pembeli --> UC1
+Pembeli --> UC2
+Pembeli --> UC3
+Pembeli --> UC8
+
+' Relasi Pelayan
+Pelayan --> UC6
+Pelayan --> UC7
+
+' Relasi Bank
+Bank --> UC5
+
+' Relasi antar use case (dibuat secukupnya)
+UC3 --> UC4 : <<extend>>  ' bunga hanya jika metode kredit/paylater
+UC3 --> UC5 : <<include>> ' proses pembayaran selalu mengirim status ke bank
+
+@enduml

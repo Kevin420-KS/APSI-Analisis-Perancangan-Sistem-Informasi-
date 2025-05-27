@@ -1,0 +1,23 @@
+@startuml
+skinparam rectangle {
+  BackgroundColor #ccffcc
+  BorderColor black
+}
+skinparam ellipse {
+  BackgroundColor #ccffff
+  BorderColor black
+}
+
+rectangle "Pembeli" as Pembeli
+rectangle "Pelayan" as Pelayan
+rectangle "Pihak Bank" as Bank
+
+rectangle "Sistem Pemesanan Makanan\n(Food Court Mall)" as Sistem
+
+Pembeli --> Sistem : Pilih Menu\nPilih Pembayaran
+Sistem --> Bank : Kirim Data Pembayaran
+Bank --> Sistem : Status Validasi
+Sistem --> Pelayan : Kirim Instruksi Pesanan
+Pelayan --> Pembeli : Antar Makanan\nSebut Nama/Meja
+
+@enduml

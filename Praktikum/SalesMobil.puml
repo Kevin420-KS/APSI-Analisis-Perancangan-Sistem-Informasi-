@@ -1,0 +1,21 @@
+@startuml
+|Admin|
+start
+:Login ke Backend;
+:Kelola Data Mobil;
+:Kelola Lokasi Sales;
+:Kelola Kontak Sales;
+stop
+
+|Pembeli|
+start
+:Kunjungi Homepage;
+:Melihat Brand Mobil;
+if (Tertarik mobil?) then (Ya)
+  :Akses About Page;
+  :Lihat Spesifikasi Mesin & Interior;
+endif
+:Akses More Page;
+:Lihat Lokasi & Kontak Sales;
+stop
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+|Pembeli|
+start
+:Melihat Menu;
+:Pilih Makanan;
+:Pilih Metode Pembayaran;
+
+if (Pembayaran = Kartu Kredit / Debit / E-money?) then (Ya)
+  |Pihak Bank|
+  :Validasi Pembayaran;
+  :Kirim Status Pembayaran;
+
+  |Pembeli|
+  if (Kartu Kredit / PayLater?) then (Ya)
+    :Tambahkan Bunga;
+    :Tandai Express Order;
+  else
+    :Tandai Standard Order;
+  endif
+
+else
+  :Tandai Standard Order;
+endif
+
+:Simpan Transaksi;
+:Menunggu Makanan;
+
+|Pelayan|
+:Terima Instruksi Pengantaran;
+if (Express Order?) then (Ya)
+  :Utamakan Pengantaran;
+else
+  :Pengantaran Sesuai Antrian;
+endif
+:Antar Makanan;
+:Sebutkan Nama Pesanan & Nomor Meja;
+
+|Pembeli|
+:Terima Makanan;
+stop
+@enduml
