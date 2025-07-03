@@ -1,0 +1,65 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Mahasiswa {
+  +id_mahasiswa : int
+  -nama_depan : string
+  -nama_belakang : string
+  -email : string
+  -password : string
+  -fakultas : string
+  -bahasa : string
+  --
+  +register() : void
+  +login() : boolean
+  +updatePassword() : void
+}
+
+class Jadwal {
+  +id_jadwal : int
+  +id_mahasiswa : int
+  -mata_kuliah : string
+  -hari : string
+  -jam : string
+  -uts : datetime
+  -uas : datetime
+  --
+  +tampilkanJadwal() : void
+}
+
+class Nilai {
+  +id_nilai : int
+  +id_mahasiswa : int
+  -mata_kuliah : string
+  -semester : string
+  -nilai_uts : int
+  -nilai_uas : int
+  -status : string
+  --
+  +hitungRataRata() : float
+  +cekKelulusan() : string
+}
+
+class Beasiswa {
+  +id_beasiswa : int
+  -nama : string
+  -jenis : string
+  -semester_tersedia : string
+  -keterangan : string
+  --
+  +tampilkanInfo() : void
+}
+
+class PendaftarBeasiswa {
+  +id : int
+  +id_mahasiswa : int
+  +id_beasiswa : int
+  --
+  +daftar() : void
+}
+
+Mahasiswa "1" --> "*" Jadwal : memiliki
+Mahasiswa "1" --> "*" Nilai : menerima
+Mahasiswa "1" --> "*" PendaftarBeasiswa : mendaftar
+Beasiswa "1" --> "*" PendaftarBeasiswa : tersedia untuk
+@enduml

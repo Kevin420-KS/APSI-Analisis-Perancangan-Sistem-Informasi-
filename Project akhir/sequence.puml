@@ -1,0 +1,41 @@
+@startuml
+actor User
+participant "Aplikasi UI" as UI
+participant "Auth Service" as Auth
+participant "Database" as DB
+participant "Chatbot" as Bot
+
+User -> UI : Buka aplikasi
+UI -> User : Tampilkan pilihan bahasa
+User -> UI : Pilih Bahasa
+UI -> User : Tampilkan Register/Login
+
+User -> UI : Klik Register
+UI -> User : Isi form
+UI -> Auth : Kirim data registrasi
+Auth -> DB : Simpan data Mahasiswa
+DB --> Auth : Konfirmasi ID Mahasiswa
+Auth --> UI : Registrasi berhasil
+UI -> User : Arahkan ke login
+
+User -> UI : Input email/ID dan password
+UI -> Auth : Verifikasi login
+Auth -> DB : Cek kredensial
+DB --> Auth : Data cocok/tidak
+alt Login gagal
+  UI -> User : Tampilkan notifikasi gagal
+  User -> UI : Klik lupa password
+  UI -> User : Input gmail
+  UI -> Auth : Kirim kode verifikasi
+  User -> UI : Input kode
+  UI -> Auth : Reset password
+  UI -> User : Arahkan ke login
+else Login berhasil
+  UI -> Bot : Buka dashboard chatbot
+  Bot -> User : Tampilkan fitur utama
+  User -> Bot : Pilih salah satu fitur
+  Bot -> DB : Ambil data fitur
+  DB --> Bot : Kirim hasil
+  Bot -> User : Tampilkan informasi
+end
+@enduml

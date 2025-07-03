@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "User Indo" as UserID
+actor "User Inter" as UserEN
+
+rectangle "Chatbot Akademik Kampus" {
+    usecase "Pilih Bahasa" as UC1
+    usecase "Register Akun" as UC2
+    usecase "Login Akun" as UC3
+    usecase "Lupa Password" as UC4
+    usecase "Masukkan Kode Verifikasi" as UC5
+    usecase "Reset Password" as UC6
+    usecase "Akses Dashboard Chatbot" as UC7
+    usecase "Lihat Jadwal Kuliah" as UC8
+    usecase "Lihat Nilai" as UC9
+    usecase "Lihat Beasiswa" as UC10
+    usecase "Notifikasi Gagal Login" as UC11
+}
+
+UserID --> UC1
+UserEN --> UC1
+
+UC1 --> UC2 : <<include>>
+UC1 --> UC3 : <<include>>
+
+UC3 --> UC11 : <<extend>>
+UC3 --> UC4 : <<extend>>
+
+UC4 --> UC5 : <<include>>
+UC5 --> UC6 : <<include>>
+
+UC2 --> UC7 : <<include>>
+UC3 --> UC7 : <<include>>
+UC6 --> UC3 : <<include>>
+
+UC7 --> UC8 : <<include>>
+UC7 --> UC9 : <<include>>
+UC7 --> UC10 : <<include>>
+
+@enduml

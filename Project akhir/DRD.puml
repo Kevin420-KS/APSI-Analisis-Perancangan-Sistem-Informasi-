@@ -1,0 +1,46 @@
+@startuml
+left to right direction
+
+' External Entity
+rectangle "Mahasiswa" as Mahasiswa
+
+' Proses
+circle "Pilih Bahasa" as P1
+circle "Registrasi" as P2
+circle "Login" as P3
+circle "Lupa Password" as P4
+circle "Verifikasi Kode" as P5
+circle "Reset Password" as P6
+circle "Dashboard Chatbot" as P7
+
+' Data Store
+rectangle "Data Mahasiswa" as DS1
+rectangle "Data Jadwal" as DS2
+rectangle "Data Nilai" as DS3
+rectangle "Data Beasiswa" as DS4
+
+' Alur data
+Mahasiswa --> P1 : pilihan bahasa
+P1 --> P2 : form registrasi
+P2 --> DS1 : simpan data mahasiswa
+P2 --> P3 : lanjut login
+
+Mahasiswa --> P3 : email/ID dan password
+P3 --> DS1 : verifikasi akun
+P3 --> P7 : akses berhasil
+
+P3 --> P4 : lupa password
+P4 --> Mahasiswa : input email
+P4 --> P5 : kirim kode verifikasi
+P5 --> Mahasiswa : input kode
+P5 --> P6 : lanjut reset password
+P6 --> DS1 : update password
+P6 --> P3 : arahkan login
+
+P7 --> Mahasiswa : permintaan fitur
+P7 --> DS2 : ambil jadwal
+P7 --> DS3 : ambil nilai
+P7 --> DS4 : ambil beasiswa
+P7 --> Mahasiswa : tampilkan hasil
+
+@enduml

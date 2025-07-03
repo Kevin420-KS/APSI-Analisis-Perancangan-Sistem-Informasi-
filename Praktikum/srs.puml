@@ -1,0 +1,165 @@
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+
+' Users
+table(users) {
+  +id : INT (PK)
+  name : VARCHAR
+  email : VARCHAR (UNIQUE)
+  password : VARCHAR
+  role : ENUM('student','teacher','admin')
+}
+
+' Students
+table(students) {
+  +id : INT (PK)
+  user_id : INT (FK)
+  batch_id : INT
+  status : VARCHAR
+}
+
+' Teachers
+table(teachers) {
+  +id : INT (PK)
+  user_id : INT (FK)
+  department_id : INT
+  status : VARCHAR
+  skill : VARCHAR
+}
+
+' Departments
+table(departments) {
+  +id : INT (PK)
+  name : VARCHAR
+  description : TEXT
+}
+
+' Courses
+table(courses) {
+  +id : INT (PK)
+  title : VARCHAR
+  syllabus : TEXT
+  start_date : DATE
+  end_date : DATE
+}
+
+' Modules
+table(modules) {
+  +id : INT (PK)
+  course_id : INT (FK)
+  title : VARCHAR
+  content_type : ENUM('video','PDF')
+  file_path : VARCHAR
+}
+
+' Sessions
+table(sessions) {
+  +id : INT (PK)
+  course_id : INT (FK)
+  module_id : INT (FK)
+  date : DATE
+  format : ENUM('online','offline')
+  teacher_id : INT (FK)
+}
+
+' Attendance
+table(attendance) {
+  +id : INT (PK)
+  session_id : INT (FK)
+  user_id : INT (FK)
+  status : ENUM('hadir','izin','sakit','alfa')
+  note : TEXT
+}
+
+' Quizzes
+table(quizzes) {
+  +id : INT (PK)
+  module_id : INT (FK)
+  question_type : VARCHAR
+  content : TEXT
+  options : TEXT
+  answer : TEXT
+}
+
+' Grades
+table(grades) {
+  +id : INT (PK)
+  user_id : INT (FK)
+  quiz_id : INT (FK)
+  score : FLOAT
+}
+
+' Leave Requests
+table(leave_requests) {
+  +id : INT (PK)
+  teacher_id : INT (FK)
+  start_date : DATE
+  end_date : DATE
+  reason : TEXT
+  status : VARCHAR
+}
+
+' Backup Teachers
+table(backup_teachers) {
+  +id : INT (PK)
+  leave_id : INT (FK)
+  backup_teacher_id : INT (FK)
+}
+
+' Salary Slips
+table(salary_slips) {
+  +id : INT (PK)
+  teacher_id : INT (FK)
+  month : VARCHAR
+  total_gaji : DECIMAL
+  potongan : DECIMAL
+  bonus : DECIMAL
+}
+
+' Payments
+table(payments) {
+  +id : INT (PK)
+  student_id : INT (FK)
+  amount : DECIMAL
+  status : VARCHAR
+  transaction_id : VARCHAR
+  method : VARCHAR
+}
+
+' Notifications
+table(notifications) {
+  +id : INT (PK)
+  user_id : INT (FK)
+  type : ENUM('email','whatsapp')
+  message : TEXT
+  created_at : TIMESTAMP
+}
+
+' Relationships
+users ||--o{ students : has
+users ||--o{ teachers : has
+users ||--o{ attendance : has
+users ||--o{ grades : has
+users ||--o{ notifications : has
+
+teachers ||--o{ sessions : teaches
+teachers ||--o{ leave_requests : submits
+teachers ||--o{ salary_slips : receives
+teachers ||--o{ backup_teachers : substitutes
+
+departments ||--o{ teachers : assigns
+
+courses ||--o{ modules : contains
+courses ||--o{ sessions : includes
+
+modules ||--o{ quizzes : contains
+modules ||--o{ sessions : part of
+
+sessions ||--o{ attendance : tracks
+
+students ||--o{ payments : makes
+
+leave_requests ||--o{ backup_teachers : needs
+
+quizzes ||--o{ grades : has
+@enduml

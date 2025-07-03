@@ -1,0 +1,46 @@
+@startuml
+start
+
+:User membuka aplikasi;
+:Tampilkan pilihan bahasa;
+
+if (Pilih Bahasa?) then (Bahasa Indonesia)
+  :Tampilkan halaman Register/Login (dalam Bahasa Indonesia);
+elseif (Bahasa Inggris)
+  :Tampilkan halaman Register/Login (in English);
+endif
+
+if (Pilih Register?) then (Ya)
+  :Isi Form Registrasi;
+  :Simpan data dan beri ID Mahasiswa;
+  :Arahkan ke halaman Login;
+endif
+
+if (Pilih Login?) then (Ya)
+  :Masukkan email/ID dan password;
+  if (Login berhasil?) then (Ya)
+    :Masuk ke dashboard chatbot;
+  else
+    :Tampilkan notifikasi gagal;
+    if (Klik lupa password?) then (Ya)
+      :Input gmail aktif;
+      :Kirim kode verifikasi;
+      :Input kode;
+      :Reset password;
+      :Arahkan ke login kembali;
+    endif
+  endif
+endif
+
+:Tampilkan fitur Jadwal/Nilai/Beasiswa;
+
+if (Pilih Jadwal?) then (Ya)
+  :Tampilkan jadwal kuliah, UTS, UAS;
+elseif (Pilih Nilai?) then (Ya)
+  :Tampilkan nilai dan status kelulusan;
+elseif (Pilih Beasiswa?) then (Ya)
+  :Tampilkan daftar beasiswa tersedia;
+endif
+
+stop
+@enduml

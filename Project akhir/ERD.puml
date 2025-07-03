@@ -1,0 +1,55 @@
+@startuml
+entity "Mahasiswa" {
+  * id_mahasiswa : int
+  --
+  nama_depan : string
+  nama_belakang : string
+  email : string
+  password : string
+  fakultas : string
+  bahasa : string
+}
+
+entity "Jadwal" {
+  * id_jadwal : int
+  --
+  id_mahasiswa : int
+  mata_kuliah : string
+  hari : string
+  jam : string
+  uts : datetime
+  uas : datetime
+}
+
+entity "Nilai" {
+  * id_nilai : int
+  --
+  id_mahasiswa : int
+  mata_kuliah : string
+  semester : string
+  nilai_uts : int
+  nilai_uas : int
+  status : string
+}
+
+entity "Beasiswa" {
+  * id_beasiswa : int
+  --
+  nama : string
+  jenis : string
+  semester_tersedia : string
+  keterangan : text
+}
+
+entity "Pendaftar_Beasiswa" {
+  * id : int
+  --
+  id_mahasiswa : int
+  id_beasiswa : int
+}
+
+Mahasiswa ||--o{ Jadwal
+Mahasiswa ||--o{ Nilai
+Mahasiswa ||--o{ Pendaftar_Beasiswa
+Beasiswa ||--o{ Pendaftar_Beasiswa
+@enduml

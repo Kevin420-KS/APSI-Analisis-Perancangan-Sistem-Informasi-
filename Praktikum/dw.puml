@@ -1,0 +1,58 @@
+@startuml
+title Star Schema - Data Warehouse Perpustakaan Digital
+
+' Posisikan dimensi menyebar
+left to right direction
+
+entity "Dim_Buku" as B {
+  + ID_Buku
+  --
+  Judul
+  Kategori
+  Pengarang
+  Tahun_Terbit
+}
+
+entity "Dim_Pengguna" as U {
+  + ID_Pengguna
+  --
+  Nama
+  Fakultas
+  Jenis_Kelamin
+  Tipe_Akun
+}
+
+entity "Dim_Waktu" as T {
+  + ID_Waktu
+  --
+  Tanggal
+  Bulan
+  Tahun
+  Hari
+}
+
+entity "Dim_Lokasi" as L {
+  + ID_Lokasi
+  --
+  Nama_Lokasi
+  Kota
+  Provinsi
+}
+
+entity "Fakta_Peminjaman" as F {
+  + ID_Peminjaman
+  --
+  ID_Buku
+  ID_Pengguna
+  ID_Waktu
+  ID_Lokasi
+  Jumlah
+}
+
+' Atur hubungan dengan arah
+F -down-> B : ID_Buku
+F -left-> U : ID_Pengguna
+F -up-> T : ID_Waktu
+F -right-> L : ID_Lokasi
+
+@enduml
