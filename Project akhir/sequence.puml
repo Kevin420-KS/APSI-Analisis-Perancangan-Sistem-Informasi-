@@ -28,7 +28,8 @@ alt Login gagal
   UI -> User : Input gmail
   UI -> Auth : Kirim kode verifikasi
   User -> UI : Input kode
-  UI -> Auth : Reset password
+  UI -> Auth : Verifikasi kode
+  UI -> Auth : Update password
   UI -> User : Arahkan ke login
 else Login berhasil
   UI -> Bot : Buka dashboard chatbot

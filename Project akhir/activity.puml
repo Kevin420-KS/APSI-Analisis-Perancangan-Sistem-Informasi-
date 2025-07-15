@@ -5,9 +5,9 @@ start
 :Tampilkan pilihan bahasa;
 
 if (Pilih Bahasa?) then (Bahasa Indonesia)
-  :Tampilkan halaman Register/Login (dalam Bahasa Indonesia);
+  :Tampilkan halaman Register/Login (Bahasa Indonesia);
 elseif (Bahasa Inggris)
-  :Tampilkan halaman Register/Login (in English);
+  :Tampilkan halaman Register/Login (English);
 endif
 
 if (Pilih Register?) then (Ya)
@@ -20,6 +20,16 @@ if (Pilih Login?) then (Ya)
   :Masukkan email/ID dan password;
   if (Login berhasil?) then (Ya)
     :Masuk ke dashboard chatbot;
+    :Tampilkan fitur Jadwal/Nilai/Beasiswa;
+
+    if (Pilih Jadwal?) then (Ya)
+      :Tampilkan jadwal kuliah, UTS, UAS;
+    elseif (Pilih Nilai?) then (Ya)
+      :Tampilkan nilai dan status kelulusan;
+    elseif (Pilih Beasiswa?) then (Ya)
+      :Tampilkan daftar beasiswa tersedia;
+    endif
+
   else
     :Tampilkan notifikasi gagal;
     if (Klik lupa password?) then (Ya)
@@ -30,16 +40,6 @@ if (Pilih Login?) then (Ya)
       :Arahkan ke login kembali;
     endif
   endif
-endif
-
-:Tampilkan fitur Jadwal/Nilai/Beasiswa;
-
-if (Pilih Jadwal?) then (Ya)
-  :Tampilkan jadwal kuliah, UTS, UAS;
-elseif (Pilih Nilai?) then (Ya)
-  :Tampilkan nilai dan status kelulusan;
-elseif (Pilih Beasiswa?) then (Ya)
-  :Tampilkan daftar beasiswa tersedia;
 endif
 
 stop

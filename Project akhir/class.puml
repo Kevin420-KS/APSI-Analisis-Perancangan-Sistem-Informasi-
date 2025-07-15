@@ -9,6 +9,7 @@ class Mahasiswa {
   -password : string
   -fakultas : string
   -bahasa : string
+  -kode_verifikasi : string
   --
   +register() : void
   +login() : boolean
