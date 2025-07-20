@@ -5,38 +5,78 @@ participant "Auth Service" as Auth
 participant "Database" as DB
 participant "Chatbot" as Bot
 
+== Halaman Awal ==
 User -> UI : Buka aplikasi
-UI -> User : Tampilkan pilihan bahasa
-User -> UI : Pilih Bahasa
-UI -> User : Tampilkan Register/Login
+activate UI
+UI -> User : Tampilkan teks selamat datang
+UI -> User : Pilih bahasa (ID/EN)
+deactivate UI
 
-User -> UI : Klik Register
-UI -> User : Isi form
+== Halaman Register/Login ==
+User -> UI : Pilih bahasa
+activate UI
+UI -> User : Tampilkan halaman\n Register & Login
+deactivate UI
+
+== Registrasi ==
+User -> UI : Klik tombol Register
+activate UI
+UI -> User : Form isi data pendaftaran
+User -> UI : Submit form
 UI -> Auth : Kirim data registrasi
-Auth -> DB : Simpan data Mahasiswa
+activate Auth
+Auth -> DB : Simpan data mahasiswa
+activate DB
 DB --> Auth : Konfirmasi ID Mahasiswa
+deactivate DB
 Auth --> UI : Registrasi berhasil
-UI -> User : Arahkan ke login
+deactivate Auth
+UI -> User : Arahkan ke halaman login
+deactivate UI
 
-User -> UI : Input email/ID dan password
-UI -> Auth : Verifikasi login
+== Login ==
+User -> UI : Masukkan email/ID & password
+activate UI
+UI -> Auth : Kirim data login
+activate Auth
 Auth -> DB : Cek kredensial
-DB --> Auth : Data cocok/tidak
+activate DB
+DB --> Auth : Hasil cocok/tidak
+deactivate DB
+
 alt Login gagal
-  UI -> User : Tampilkan notifikasi gagal
-  User -> UI : Klik lupa password
-  UI -> User : Input gmail
-  UI -> Auth : Kirim kode verifikasi
-  User -> UI : Input kode
-  UI -> Auth : Verifikasi kode
-  UI -> Auth : Update password
-  UI -> User : Arahkan ke login
+    Auth --> UI : Gagal login
+    UI -> User : Notifikasi gagal
+    User -> UI : Klik Lupa Password
+    UI -> User : Input email aktif
+    User -> UI : Isi email
+    UI -> Auth : Kirim kode verifikasi
+    Auth -> User : Kode dikirim via email
+    User -> UI : Input kode verifikasi
+    UI -> Auth : Verifikasi kode
+    UI -> Auth : Update password
+    Auth --> UI : Password berhasil diubah
+    UI -> User : Arahkan ke login
 else Login berhasil
-  UI -> Bot : Buka dashboard chatbot
-  Bot -> User : Tampilkan fitur utama
-  User -> Bot : Pilih salah satu fitur
-  Bot -> DB : Ambil data fitur
-  DB --> Bot : Kirim hasil
-  Bot -> User : Tampilkan informasi
+    Auth --> UI : Login berhasil
+    UI -> Bot : Buka dashboard chatbot
+    activate Bot
+    Bot -> User : Tampilkan menu fitur utama
+    User -> Bot : Pilih fitur (Jadwal/Nilai/Beasiswa)
+
+    alt Pilih Jadwal
+        Bot -> DB : Ambil jadwal kuliah, UTS, UAS
+        DB --> Bot : Data jadwal
+        Bot -> User : Tampilkan jadwal
+    else Pilih Nilai
+        Bot -> DB : Ambil nilai UTS/UAS per semester
+        DB --> Bot : Data nilai
+        Bot -> User : Tampilkan nilai
+    else Pilih Beasiswa
+        Bot -> DB : Ambil informasi beasiswa
+        DB --> Bot : Data beasiswa
+        Bot -> User : Tampilkan informasi beasiswa
+    end
 end
+deactivate Bot
 @enduml
